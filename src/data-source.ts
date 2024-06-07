@@ -1,19 +1,20 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { User } from './entity/User';
+import { User } from './users/entities/user.entity';
+import { Post } from './posts/entities/post.entity';
 
 const configservice = new ConfigService();
 export const AppDataSource = new DataSource({
   type: 'postgres',
   host: configservice.get('DB_HOST'),
   port: parseInt(configservice.get('DB_PORT')),
-  username: configservice.get('DB_USERNAME'),
-  password: configservice.get('DB_PASSWORD'),
+  username: 'postgres',
+  password: 'Collinsceleb21&',
   database: configservice.get('DB_NAME'),
   synchronize: true,
   logging: false,
-  entities: [User],
+  entities: [User, Post],
   migrations: [],
   subscribers: [],
 });
