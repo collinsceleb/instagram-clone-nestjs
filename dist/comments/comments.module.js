@@ -9,12 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentsModule = void 0;
 const common_1 = require("@nestjs/common");
 const comments_service_1 = require("./comments.service");
+const comments_resolver_1 = require("./comments.resolver");
 let CommentsModule = class CommentsModule {
 };
 exports.CommentsModule = CommentsModule;
 exports.CommentsModule = CommentsModule = __decorate([
     (0, common_1.Module)({
-        providers: [comments_service_1.CommentsService],
+        providers: [comments_resolver_1.CommentsResolver, comments_service_1.CommentsService],
     })
 ], CommentsModule);
 //# sourceMappingURL=comments.module.js.map
