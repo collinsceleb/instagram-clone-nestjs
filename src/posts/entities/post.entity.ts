@@ -1,5 +1,13 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Comment } from '../../comments/entities/comment.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 @ObjectType()
@@ -19,4 +27,12 @@ export class Post {
   @Field()
   @Column({ default: true })
   isPublished: boolean;
+
+  @Field()
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
+
+  @Field()
+  @ManyToOne(() => User, (user) => user.posts)
+  user: User;
 }
