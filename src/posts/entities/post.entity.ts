@@ -28,11 +28,11 @@ export class Post {
   @Column({ default: true })
   isPublished: boolean;
 
-  @Field()
+  @Field(() => [Comment], { nullable: true })
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
-  @Field()
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.posts)
   user: User;
 }

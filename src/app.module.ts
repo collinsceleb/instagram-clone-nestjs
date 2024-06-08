@@ -9,6 +9,7 @@ import { join } from 'path';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { User } from './users/entities/user.entity';
 import { Post } from './posts/entities/post.entity';
+import { Comment } from './comments/entities/comment.entity';
 
 @Module({
   imports: [
@@ -19,12 +20,12 @@ import { Post } from './posts/entities/post.entity';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: '',
-      password: '',
+      username: 'postgres',
+      password: 'Collinsceleb21&',
       database: 'instagram_clone',
       synchronize: true,
       logging: false,
-      entities: [User, Post],
+      entities: [User, Post, Comment],
       migrations: [],
       subscribers: [],
     }),

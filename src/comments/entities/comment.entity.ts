@@ -10,7 +10,7 @@ export class Comment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => Post)
   @ManyToOne(() => Post, (post) => post.comments)
   post: Post;
 
@@ -18,7 +18,7 @@ export class Comment {
   @Column()
   content: string;
 
-  @Field()
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.comments)
   user: User;
 }

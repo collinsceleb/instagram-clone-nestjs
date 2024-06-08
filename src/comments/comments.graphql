@@ -1,24 +1,24 @@
-ype Comment {
-  # Example field (placeholder)
-  exampleField: Int
+type Comment {
+  id: ID!
+  content: String!
+  post: Post!
+  user: User!
 }
-
 input CreateCommentInput {
-  # Example field (placeholder)
-  exampleField: Int
+  postId: ID 
+  content: String
+  userId: ID
 }
 
 input UpdateCommentInput {
-  id: Int!
-}
+  id: ID!
+  content: String!
 
 type Query {
-  comments: [Comment]!
-  comment(id: Int!): Comment
+  comments(postId: ID!): [Comment!]!
 }
 
 type Mutation {
-  createComment(createCommentInput: CreateCommentInput!): Comment!
-  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
-  removeComment(id: Int!): Comment
-}
+  createComment(createCommentInput: CreateCommentInput): Comment!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment
+  deleteComment(id: ID!): Boolean!

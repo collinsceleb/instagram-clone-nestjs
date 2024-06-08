@@ -2,31 +2,78 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Comment {
+  content: String!
+  id: Float!
+  post: Post!
+  user: User!
+}
+
+input CreateCommentInput {
+  content: String!
+  postId: Float!
+  userId: Float!
+}
+
 input CreatePostInput {
   content: String!
   title: String!
 }
 
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Mutation {
+  createComment(createCommentInput: CreateCommentInput!): Comment!
   createPost(createPostInput: CreatePostInput!): Post!
+  deleteComment(id: Float!): Comment!
   deletePost(id: Int!): Post!
+  register(createUserInput: CreateUserInput!): User!
+  removeUser(id: Int!): User!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updatePost(updatePostInput: UpdatePostInput!): Post!
+  updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Post {
+  comments: [Comment!]
   content: String!
   id: Float!
   isPublished: Boolean!
   title: String!
+  user: User!
 }
 
 type Query {
+  comments(postId: Int!): [Comment!]!
   post(id: Int!): Post!
   posts: [Post!]!
+  user(id: Int!): User!
+  users: [User!]!
+}
+
+input UpdateCommentInput {
+  id: Int!
 }
 
 input UpdatePostInput {
   content: String
   id: Int!
   title: String
+}
+
+input UpdateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+type User {
+  comments: [Comment!]
+  id: Float!
+  password: String!
+  posts: [Post!]
+  username: String!
 }

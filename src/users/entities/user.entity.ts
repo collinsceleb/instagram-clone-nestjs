@@ -16,7 +16,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
+  @Field(() => [Post], { nullable: true })
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
@@ -28,7 +28,7 @@ export class User {
   @Column()
   password: string;
 
-  @Field()
+  @Field(() => [Comment], { nullable: true })
   @ManyToOne(() => User, (user) => user.comments)
   comments: Comment[];
 }
