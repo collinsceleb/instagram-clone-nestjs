@@ -5,14 +5,14 @@ type Comment {
   user: Auth!
 }
 input CreateCommentInput {
-  postId: ID 
+  postId: Int! 
   content: String
-  userId: ID
+  userId: Int!
 }
 
 input UpdateCommentInput {
-  id: ID!
-  content: String!
+  id: Int!
+  content: String
 
 type Query {
   comments(postId: ID!): [Comment!]!
@@ -20,5 +20,5 @@ type Query {
 
 type Mutation {
   createComment(createCommentInput: CreateCommentInput): Comment!
-  updateComment(updateCommentInput: UpdateCommentInput!): Comment
+  updateComment(updateCommentInput: UpdateCommentInput): Comment!
   deleteComment(id: ID!): Boolean!

@@ -20,18 +20,23 @@ export class CommentsService {
   async createComment(
     createCommentInput: CreateCommentInput,
   ): Promise<Comment> {
-    const post = await this.postRepository.findOneBy({
-      id: createCommentInput.postId,
+    const post = await this.postRepository.findOne({
+      where: {
+        id: createCommentInput.postId,
+      },
     });
-    const user = await this.userRepository.findOneBy({
-      id: createCommentInput.userId,
+    const user = await this.userRepository.findOne({
+      where: {
+        id: createCommentInput.userId,
+      },
     });
     const newComment = await this.commentRepository.create({
-      content: createCommentInput.content,
-      post: post,
-      user: user,
+      ...createCommentInput,
+      post,
+      user,
     });
-    return this.commentRepository.save(newComment);
+    await this.commentRepository.save(newComment);
+    return newComment;
   }
 
   getAllComments(postId): Promise<Comment[]> {
@@ -41,20 +46,16 @@ export class CommentsService {
     });
   }
 
-  async updateComment(updateCommentInput: UpdateCommentInput) {
-    await this.commentRepository.update(
-      { id: updateCommentInput.id },
-      {
-        content: updateCommentInput.content,
-      },
-    );
+  async updateComment(id: number, updateCommentInput: UpdateCommentInput) {
+    await this.commentRepository.update(id, updateCommentInput);
     return await this.commentRepository.findOne({
-      where: { id: updateCommentInput.id },
+      where: { id },
       relations: ['post', 'user'],
     });
   }
 
-  async deleteComment(id: number): Promise<void> {
-    await this.commentRepository.delete(id);
+  async deleteComment(id: number) {
+    const result = await this.commentRepository.delete(id);
+    return { success: result.affected > 0 };
   }
 }

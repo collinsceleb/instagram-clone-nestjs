@@ -29,17 +29,18 @@ export class CommentsResolver {
   @Mutation(() => Comment)
   @UseGuards(GqlAuthGuard)
   updateComment(
+    @Args('id', { type: () => Int }) id: number,
     @Args('updateCommentInput') updateCommentInput: UpdateCommentInput,
   ) {
-    return this.commentsService.updateComment({
-      id: updateCommentInput.id,
-      content: updateCommentInput.content,
-    });
+    return this.commentsService.updateComment(
+      updateCommentInput.id,
+      updateCommentInput,
+    );
   }
 
   @Mutation(() => Comment)
   @UseGuards(GqlAuthGuard)
-  deleteComment(@Args('id') id: number) {
+  deleteComment(@Args('id', { type: () => Int }) id: number) {
     return this.commentsService.deleteComment(id);
   }
 }

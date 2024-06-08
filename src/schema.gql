@@ -4,7 +4,7 @@
 
 type Auth {
   comments: [Comment!]
-  id: Float!
+  id: Int!
   password: String!
   posts: [Post!]
   token: String!
@@ -20,14 +20,14 @@ type Comment {
 
 input CreateCommentInput {
   content: String!
-  postId: Float!
-  userId: Float!
+  postId: Int!
+  userId: Int!
 }
 
 input CreatePostInput {
   content: String!
   title: String!
-  userId: Float!
+  userId: Int!
 }
 
 input CreateUserInput {
@@ -43,18 +43,18 @@ input LoginUserInput {
 type Mutation {
   createComment(createCommentInput: CreateCommentInput!): Comment!
   createPost(createPostInput: CreatePostInput!): Post!
-  deleteComment(id: Float!): Comment!
+  deleteComment(id: Int!): Comment!
   deletePost(id: Int!): Post!
   login(loginUserInput: LoginUserInput!): Auth!
   register(createUserInput: CreateUserInput!): Auth!
-  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
+  updateComment(id: Int!, updateCommentInput: UpdateCommentInput!): Comment!
   updatePost(id: Int!, updatePostInput: UpdatePostInput!): Post!
 }
 
 type Post {
   comments: [Comment!]
   content: String!
-  id: Float!
+  id: Int!
   isPublished: Boolean!
   title: String!
   user: Auth!
@@ -67,6 +67,7 @@ type Query {
 }
 
 input UpdateCommentInput {
+  content: String!
   id: Int!
 }
 
@@ -74,5 +75,5 @@ input UpdatePostInput {
   content: String
   id: Int!
   title: String
-  userId: Float
+  userId: Int
 }

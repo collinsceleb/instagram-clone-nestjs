@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Comment } from '../../comments/entities/comment.entity';
 import {
   Column,
@@ -12,7 +12,7 @@ import { Auth } from '../../users/entities/auth.entity';
 @Entity()
 @ObjectType()
 export class Post {
-  @Field()
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
