@@ -26,23 +26,24 @@ export class PostsResolver {
   }
 
   @Query(() => [Post], { name: 'posts' })
-  findAll() {
+  posts() {
     return this.postsService.getAllPost();
   }
 
   @Query(() => Post, { name: 'post' })
-  findOne(@Args('id', { type: () => Int }) id: any) {
+  post(@Args('id', { type: () => Int }) id: any) {
     return this.postsService.getPostById(id);
   }
 
   @Mutation(() => Post)
   @UseGuards(GqlAuthGuard)
   updatePost(
+    @Args('id', { type: () => Int }) id: number,
     @Args('updatePostInput') updatePostInput: UpdatePostInput,
     @CurrentUser() user: Auth,
   ) {
     return this.postsService.updatePostById(
-      { id: updatePostInput.id },
+      updatePostInput.id,
       updatePostInput,
     );
   }

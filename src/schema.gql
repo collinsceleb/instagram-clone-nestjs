@@ -48,7 +48,7 @@ type Mutation {
   login(loginUserInput: LoginUserInput!): Auth!
   register(createUserInput: CreateUserInput!): Auth!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
-  updatePost(updatePostInput: UpdatePostInput!): Post!
+  updatePost(id: Int!, updatePostInput: UpdatePostInput!): Post!
 }
 
 type Post {

@@ -8,24 +8,27 @@ type Post {
 }
 
 input CreatePostInput {
+  userId: Int!
   title: String 
   content: String
-  userId: Int!
 }
 
 input UpdatePostInput {
-  id: ID!
-  title: String!
-  content: String! 
-  isPublished: Boolean!
+  id: Int!
+  title: String
+  content: String
+}
+
 
 type Query {
   posts: [Post!]!
   post(id: ID!): Post
 }
 
+union PostOrDeleteResponse = Post | DeleteResponse
+
 type Mutation {
-  createPost(createPostInput: CreatePostInput): Post
-  updatePost(updatePostInput: UpdatePostInput): Post
-  deletePost(id: ID!): Post
+  createPost(createPostInput: CreatePostInput): Post!
+  updatePost(id: Int!, updatePostInput: UpdatePostInput): Post!
+  deletePost(id: Int!): PostOrDeleteResponse
 }

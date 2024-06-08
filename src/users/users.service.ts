@@ -76,15 +76,15 @@ export class UsersService {
 
   async login(loginUserInput: LoginUserInput): Promise<Auth> {
     const user = await this.validateUser(loginUserInput);
-    console.log(user);
     if (!user) {
       throw new NotFoundException('Invalid login credentials');
     }
     const userToken = await this.signToken(user.id, user.username);
     user.token = userToken;
     console.log(userToken);
-    const savedUser = await this.userRepository.save(user);
-    return savedUser;
+    await this.userRepository.save(user);
+    console.log(user.token);
+    return { ...user, token: user.token };
   }
 
   async findOneByUsername(username: string): Promise<Auth> {

@@ -3,26 +3,39 @@ import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
-import { FindOneOptions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { Auth } from '../users/entities/auth.entity';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectRepository(Post) private readonly postRepository: Repository<Post>,
+    @InjectRepository(Auth) private readonly userRepository: Repository<Auth>,
   ) {}
   async createPost(createPostInput: CreatePostInput): Promise<Post> {
-    const newPost = this.postRepository.create(createPostInput);
+    const user = await this.userRepository.findOne({
+      where: { id: createPostInput.userId },
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const newPost = this.postRepository.create({ ...createPostInput, user });
     await this.postRepository.save(newPost);
     return newPost;
   }
 
   async getAllPost(): Promise<Post[]> {
-    const allPost = await this.postRepository.find();
+    const allPost = await this.postRepository.find({
+      relations: ['user', 'comments'],
+    });
     return allPost;
   }
 
-  async getPostById(id: FindOneOptions<Post>): Promise<Post> {
-    const getOnePost = await this.postRepository.findOne(id);
+  async getPostById(id: number): Promise<Post> {
+    const getOnePost = await this.postRepository.findOne({
+      where: { id },
+      relations: ['user', 'comments'],
+    });
     if (!getOnePost) {
       throw new NotFoundException(`Post with the ${id} is not found`);
     }
@@ -30,7 +43,7 @@ export class PostsService {
   }
 
   async updatePostById(
-    id: any,
+    id: number,
     updatePostInput: UpdatePostInput,
   ): Promise<Post> {
     await this.postRepository.update(id, updatePostInput);
@@ -38,7 +51,8 @@ export class PostsService {
     return post;
   }
 
-  deletePost(id: number) {
-    return `This action removes a #${id} post`;
+  async deletePost(id: number) {
+    const result = await this.postRepository.delete(id);
+    return { success: result.affected > 0 };
   }
 }
