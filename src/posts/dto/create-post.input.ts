@@ -7,4 +7,7 @@ export class CreatePostInput {
 
   @Field()
   content: string;
+
+  @Field()
+  userId: number;
 }

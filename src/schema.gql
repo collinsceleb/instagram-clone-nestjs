@@ -18,11 +18,17 @@ input CreateCommentInput {
 input CreatePostInput {
   content: String!
   title: String!
+  userId: Float!
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  password: String!
+  username: String!
+}
+
+input LoginUserInput {
+  password: String!
+  username: String!
 }
 
 type Mutation {
@@ -30,11 +36,10 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   deleteComment(id: Float!): Comment!
   deletePost(id: Int!): Post!
+  login(loginUserInput: LoginUserInput!): User!
   register(createUserInput: CreateUserInput!): User!
-  removeUser(id: Int!): User!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updatePost(updatePostInput: UpdatePostInput!): Post!
-  updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Post {
@@ -50,8 +55,6 @@ type Query {
   comments(postId: Int!): [Comment!]!
   post(id: Int!): Post!
   posts: [Post!]!
-  user(id: Int!): User!
-  users: [User!]!
 }
 
 input UpdateCommentInput {
@@ -62,12 +65,7 @@ input UpdatePostInput {
   content: String
   id: Int!
   title: String
-}
-
-input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  userId: Float
 }
 
 type User {

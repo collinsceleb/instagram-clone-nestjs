@@ -1,4 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
+import * as argon2 from 'argon2';
 import { Post } from '../../posts/entities/post.entity';
 import {
   PrimaryGeneratedColumn,
@@ -31,4 +32,12 @@ export class User {
   @Field(() => [Comment], { nullable: true })
   @ManyToOne(() => User, (user) => user.comments)
   comments: Comment[];
+
+  async hashPassword() {
+    this.password = await argon2.hash(this.password);
+  }
+
+  async validatePassword(password: string): Promise<boolean> {
+    return await argon2.verify(this.password, password);
+  }
 }

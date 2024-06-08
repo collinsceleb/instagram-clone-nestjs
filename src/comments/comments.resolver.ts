@@ -3,12 +3,15 @@ import { CommentsService } from './comments.service';
 import { CreateCommentInput } from './dto/create-comment.input';
 import { UpdateCommentInput } from './dto/update-comment.input';
 import { Comment } from './entities/comment.entity';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from '../users/guards/gql-auth.guard';
 
 @Resolver('Comment')
 export class CommentsResolver {
   constructor(private readonly commentsService: CommentsService) {}
 
   @Mutation(() => Comment)
+  @UseGuards(GqlAuthGuard)
   createComment(
     @Args('createCommentInput') createCommentInput: CreateCommentInput,
   ) {
@@ -16,6 +19,7 @@ export class CommentsResolver {
   }
 
   @Query(() => [Comment])
+  @UseGuards(GqlAuthGuard)
   comments(
     @Args('postId', { type: () => Int }) postId: number,
   ): Promise<Comment[]> {
@@ -23,6 +27,7 @@ export class CommentsResolver {
   }
 
   @Mutation(() => Comment)
+  @UseGuards(GqlAuthGuard)
   updateComment(
     @Args('updateCommentInput') updateCommentInput: UpdateCommentInput,
   ) {
@@ -33,6 +38,7 @@ export class CommentsResolver {
   }
 
   @Mutation(() => Comment)
+  @UseGuards(GqlAuthGuard)
   deleteComment(@Args('id') id: number) {
     return this.commentsService.deleteComment(id);
   }

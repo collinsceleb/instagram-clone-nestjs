@@ -3,11 +3,14 @@ type Post {
   title: String!
   content: String!
   isPublished: Boolean!
+  user: User!
+  comments: [Comment!]!
 }
 
 input CreatePostInput {
   title: String 
   content: String
+  userId: Int!
 }
 
 input UpdatePostInput {
@@ -22,7 +25,7 @@ type Query {
 }
 
 type Mutation {
-  createPost(title: String, content: String}): Post
+  createPost(createPostInput: CreatePostInput): Post
   updatePost(updatePostInput: UpdatePostInput): Post
   deletePost(id: ID!): Post
 }

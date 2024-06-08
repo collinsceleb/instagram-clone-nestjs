@@ -5,12 +5,22 @@ type User {
   comments: [Comment!]!
 }
 
+input CreateUserInput {
+  username: String!
+  password: String!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
+}
+
 type AuthPayload {
   accessToken: String!
   user: User!
 }
 
 type Mutation {
-  register(username: String!, password: String!): User!
-  login(username: String!, password: String!): AuthPayload!
+  register(createUserInput: CreateUserInput): User!
+  login(loginUserInput: LoginUserInput): AuthPayload!
 }
