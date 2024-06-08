@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import { User } from './users/entities/user.entity';
+import { Auth } from './users/entities/auth.entity';
 import { Post } from './posts/entities/post.entity';
 
 const configservice = new ConfigService();
@@ -14,7 +14,7 @@ export const AppDataSource = new DataSource({
   database: configservice.get('DB_NAME'),
   synchronize: true,
   logging: false,
-  entities: [User, Post],
+  entities: [Auth, Post],
   migrations: [],
   subscribers: [],
 });

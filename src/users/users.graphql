@@ -1,6 +1,8 @@
-type User {
+type Auth {
   id: ID!
   username: String!
+  password: String!
+  token
   posts: [Post!]!
   comments: [Comment!]!
 }
@@ -15,12 +17,8 @@ input LoginUserInput {
   password: String!
 }
 
-type AuthPayload {
-  accessToken: String!
-  user: User!
-}
 
 type Mutation {
-  register(createUserInput: CreateUserInput): User!
-  login(loginUserInput: LoginUserInput): AuthPayload!
+  register(createUserInput: CreateUserInput): Users!
+  login(loginUserInput: LoginUserInput): Auth!
 }

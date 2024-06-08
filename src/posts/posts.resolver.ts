@@ -6,7 +6,7 @@ import { UpdatePostInput } from './dto/update-post.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../users/guards/gql-auth.guard';
 import { CurrentUser } from '../users/decorators/current-user.decorator';
-import { User } from '../users/entities/user.entity';
+import { Auth } from '../users/entities/auth.entity';
 
 @Resolver(() => Post)
 export class PostsResolver {
@@ -16,7 +16,7 @@ export class PostsResolver {
   @UseGuards(GqlAuthGuard)
   createPost(
     @Args('createPostInput') createPostInput: CreatePostInput,
-    @CurrentUser() user: User,
+    @CurrentUser() user: Auth,
   ) {
     return this.postsService.createPost({
       title: createPostInput.title,
@@ -39,7 +39,7 @@ export class PostsResolver {
   @UseGuards(GqlAuthGuard)
   updatePost(
     @Args('updatePostInput') updatePostInput: UpdatePostInput,
-    @CurrentUser() user: User,
+    @CurrentUser() user: Auth,
   ) {
     return this.postsService.updatePostById(
       { id: updatePostInput.id },

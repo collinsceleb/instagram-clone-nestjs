@@ -1,5 +1,4 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import * as argon2 from 'argon2';
 import { Post } from '../../posts/entities/post.entity';
 import {
   PrimaryGeneratedColumn,
@@ -10,9 +9,9 @@ import {
 } from 'typeorm';
 import { Comment } from '../../comments/entities/comment.entity';
 
-@ObjectType()
 @Entity()
-export class User {
+@ObjectType()
+export class Auth {
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,15 +28,11 @@ export class User {
   @Column()
   password: string;
 
+  @Field()
+  @Column({ default: '' })
+  token: string;
+
   @Field(() => [Comment], { nullable: true })
-  @ManyToOne(() => User, (user) => user.comments)
+  @ManyToOne(() => Comment, (comment) => comment.user)
   comments: Comment[];
-
-  async hashPassword() {
-    this.password = await argon2.hash(this.password);
-  }
-
-  async validatePassword(password: string): Promise<boolean> {
-    return await argon2.verify(this.password, password);
-  }
 }

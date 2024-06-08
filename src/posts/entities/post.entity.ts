@@ -7,7 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
+import { Auth } from '../../users/entities/auth.entity';
 
 @Entity()
 @ObjectType()
@@ -32,7 +32,7 @@ export class Post {
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
-  @Field(() => User)
-  @ManyToOne(() => User, (user) => user.posts)
-  user: User;
+  @Field(() => Auth)
+  @ManyToOne(() => Auth, (user) => user.posts)
+  user: Auth;
 }

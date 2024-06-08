@@ -2,7 +2,7 @@ type Comment {
   id: ID!
   content: String!
   post: Post!
-  user: User!
+  user: Auth!
 }
 input CreateCommentInput {
   postId: ID 

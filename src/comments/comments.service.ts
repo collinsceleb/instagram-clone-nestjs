@@ -4,7 +4,7 @@ import { UpdateCommentInput } from './dto/update-comment.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
 import { Repository } from 'typeorm';
-import { User } from '../users/entities/user.entity';
+import { Auth } from '../users/entities/auth.entity';
 import { Post } from '../posts/entities/post.entity';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private readonly commentRepository: Repository<Comment>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(Auth)
+    private readonly userRepository: Repository<Auth>,
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
   ) {}

@@ -7,9 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
-import { User } from './users/entities/user.entity';
 import { Post } from './posts/entities/post.entity';
 import { Comment } from './comments/entities/comment.entity';
+import { Auth } from './users/entities/auth.entity';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { Comment } from './comments/entities/comment.entity';
       database: 'instagram_clone',
       synchronize: true,
       logging: false,
-      entities: [User, Post, Comment],
+      entities: [Post, Comment, Auth],
       migrations: [],
       subscribers: [],
     }),

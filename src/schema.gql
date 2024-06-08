@@ -2,11 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Auth {
+  comments: [Comment!]
+  id: Float!
+  password: String!
+  posts: [Post!]
+  token: String!
+  username: String!
+}
+
 type Comment {
   content: String!
   id: Float!
   post: Post!
-  user: User!
+  user: Auth!
 }
 
 input CreateCommentInput {
@@ -36,8 +45,8 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   deleteComment(id: Float!): Comment!
   deletePost(id: Int!): Post!
-  login(loginUserInput: LoginUserInput!): User!
-  register(createUserInput: CreateUserInput!): User!
+  login(loginUserInput: LoginUserInput!): Auth!
+  register(createUserInput: CreateUserInput!): Auth!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updatePost(updatePostInput: UpdatePostInput!): Post!
 }
@@ -48,7 +57,7 @@ type Post {
   id: Float!
   isPublished: Boolean!
   title: String!
-  user: User!
+  user: Auth!
 }
 
 type Query {
@@ -66,12 +75,4 @@ input UpdatePostInput {
   id: Int!
   title: String
   userId: Float
-}
-
-type User {
-  comments: [Comment!]
-  id: Float!
-  password: String!
-  posts: [Post!]
-  username: String!
 }
